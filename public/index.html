@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <meta name="description" content="A simple, student-friendly dashboard for keeping track of coursework.">
+  <title>Student Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Branding and a reminder that tasks sync with the database. -->
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Student Task Manager home">
+        <span class="brand-icon" aria-hidden="true">S</span>
+        <span class="brand-name">Student Task Manager</span>
+      </a>
+      <span class="save-note"><span class="save-dot" aria-hidden="true"></span>Synced with your database</span>
+    </header>
+
+    <main>
+      <!-- Introduction and task totals make the most useful information easy to scan. -->
+      <section class="welcome" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">YOUR STUDY SPACE</p>
+          <h1 id="page-title">Make room for what matters.</h1>
+          <p class="welcome-copy">Keep your coursework in one place and take it one task at a time.</p>
+        </div>
+        <button class="button button-primary" id="new-task-button" type="button">
+          <span class="button-plus" aria-hidden="true">+</span> Add a task
+        </button>
+      </section>
+
+      <section class="summary-grid" aria-label="Task summary">
+        <article class="summary-card summary-total">
+          <span class="summary-label">Total tasks</span>
+          <strong class="summary-value" id="total-count">0</strong>
+          <span class="summary-hint">on your list</span>
+        </article>
+        <article class="summary-card summary-pending">
+          <span class="summary-label">Pending</span>
+          <strong class="summary-value" id="pending-count">0</strong>
+          <span class="summary-hint">still to do</span>
+        </article>
+        <article class="summary-card summary-completed">
+          <span class="summary-label">Completed</span>
+          <strong class="summary-value" id="completed-count">0</strong>
+          <span class="summary-hint">nice work</span>
+        </article>
+        <article class="summary-card summary-overdue">
+          <span class="summary-label">Overdue</span>
+          <strong class="summary-value" id="overdue-count">0</strong>
+          <span class="summary-hint">past due date</span>
+        </article>
+      </section>
+
+      <!-- The form is shared by task creation and editing. -->
+      <section class="form-panel" id="form-panel" aria-labelledby="form-title" hidden>
+        <div class="form-heading">
+          <div>
+            <p class="eyebrow">TASK DETAILS</p>
+            <h2 id="form-title">Add a task</h2>
+          </div>
+          <button class="icon-button" id="close-form-button" type="button" aria-label="Cancel and close task form">×</button>
+        </div>
+
+        <form id="task-form" novalidate>
+          <div class="form-grid">
+            <div class="field field-title">
+              <label for="task-title">Task title <span class="required-mark" aria-hidden="true">*</span></label>
+              <input id="task-title" name="title" type="text" maxlength="120" autocomplete="off" required aria-describedby="title-error">
+              <span class="field-error" id="title-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="due-date">Due date <span class="required-mark" aria-hidden="true">*</span></label>
+              <input id="due-date" name="dueDate" type="date" required aria-describedby="date-error">
+              <span class="field-error" id="date-error"></span>
+            </div>
+
+            <div class="field">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+
+            <div class="field field-description">
+              <label for="description">Description <span class="optional-label">Optional</span></label>
+              <textarea id="description" name="description" rows="3" maxlength="1000" placeholder="Add a few details to help you get started..."></textarea>
+            </div>
+          </div>
+
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <div class="form-actions">
+            <button class="button button-secondary" id="cancel-button" type="button">Cancel</button>
+            <button class="button button-primary" id="save-button" type="submit">Add task</button>
+          </div>
+        </form>
+      </section>
+
+      <div class="announcement" id="announcement" role="status" aria-live="polite"></div>
+
+      <!-- Task cards are rendered here by script.js. -->
+      <section class="tasks-section" aria-labelledby="tasks-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR COURSEWORK</p>
+            <h2 id="tasks-heading">My tasks</h2>
+          </div>
+          <span class="list-count" id="list-count">0 tasks</span>
+        </div>
+        <p class="loading-message" id="loading-message" role="status" hidden>Loading your tasks...</p>
+        <div class="task-list" id="task-list" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>One step at a time.</span>
+      <span>Your tasks stay in this browser.</span>
+    </footer>
+  </div>
+</body>
+</html>
